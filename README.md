@@ -1,4 +1,4 @@
-# configurable_box
+# Configurable Box Generator
 A simple box with slip-fit lid generator in OpenSCAD, with configurator enabled.
 
 ## Adjustable Settings
