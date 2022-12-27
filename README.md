@@ -1,6 +1,8 @@
 # Configurable Box Generator
 A simple box with slip-fit lid generator in OpenSCAD, with configurator enabled.
 
+Use it to generate pencil boxes, soap boxes, a deckbox, any box you need!
+
 ## Adjustable Settings
 
 * External width, length, and height of both base and lid.
@@ -13,7 +15,7 @@ A simple box with slip-fit lid generator in OpenSCAD, with configurator enabled.
 
 By default, this project will generate a pencil box like this:
 
-![example_pencil_box](https://user-images.githubusercontent.com/188558/209711140-a41bf01e-7040-4c30-9360-fb81c103a9cf.png)
+<img src="https://user-images.githubusercontent.com/188558/209711140-a41bf01e-7040-4c30-9360-fb81c103a9cf.png" width="300px"/>
 
 ## References
 
