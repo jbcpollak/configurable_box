@@ -78,7 +78,7 @@ module base() {
     union() {
         translate(v=[0,0,height_outer/2]) 
             openBox(base_height_outer);
-        // The - 0.01 is designed to ensure the lip intersects with the
+        // The -0.01 is designed to ensure the lip intersects with the
         // box so they generate a complete 2-manifold object.
         translate(v=[0,0,base_height_outer + overlap_height/2 - .01]) lip();
     }
