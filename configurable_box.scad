@@ -1,22 +1,22 @@
 include <boxes.scad>
 
-// External width of box
-width_outer = 80;
+// Internal width of box
+width_inner = 75;
 
-// External bength of box
-length_outer = 80;
+// Internal bength of box
+length_inner = 75;
 
-// External height of bottom of box
-base_height = 130;
+// Internal height of bottom of box
+base_height = 120;
 
-// External height of the top/lid of the box
-lid_height = 70;
+// Internal height of the top/lid of the box
+lid_height = 72;
 
 // Height of the lip to generate
 overlap_height = 15;
 
 // Thickness of the outer wall
-wall_thickness = 5;
+wall_thickness = 2.4;
 
 // How curved to make the corners
 radius = 6; // [1:10]
@@ -27,21 +27,15 @@ tolerance = 0.2;
 // Ratio of lip to regular wall thickness
 lip_thickness_ratio = 0.5;
 
-height_outer = base_height + lid_height;
+height_inner = base_height + lid_height;
 
 lip_thickness = wall_thickness * lip_thickness_ratio;
 
-width_inner = width_outer - wall_thickness;
-length_inner = length_outer - wall_thickness;
-height_inner = height_outer - wall_thickness;
-
-lid_height_i = lid_height - wall_thickness;
-lid_width_i = width_outer - wall_thickness;
-lid_length_i = length_outer - wall_thickness;
+width_outer = width_inner + wall_thickness*2;
+length_outer = length_inner + wall_thickness*2;
+height_outer = height_inner + wall_thickness*2;
 
 module lip(tol = 0) {
-    cut_height = height_outer/2-overlap_height;
-    
     difference() {
         // The outside shell
         roundedCube(
@@ -75,21 +69,26 @@ module openBox(height) {
         roundedCube([width_inner,length_inner,height_inner],radius,center=true);
         // Cut the top off
         translate(v=[0,0,cut_height]) cube([width_outer+1,length_outer+1,other_height],center=true);
-        //myLidAtProperHeightWithWiggle();
         }
 }
 
 module base() {
+    base_height_outer = base_height + wall_thickness;
+    
     union() {
-        translate(v=[0,0,height_outer/2]) openBox(base_height);
-        translate(v=[0,0,base_height + overlap_height/2]) lip();
+        translate(v=[0,0,height_outer/2]) 
+            openBox(base_height_outer);
+        translate(v=[0,0,base_height_outer + overlap_height/2]) lip();
     }
 }
 
 module lid() {
+    lid_height_outer = lid_height + wall_thickness;
+
     difference() {
-        translate(v=[0,0,height_outer/2]) openBox(lid_height);
-        translate(v=[0,0,lid_height - overlap_height/2]) lip(tolerance);
+        translate(v=[0,0,height_outer/2]) 
+            openBox(lid_height_outer);
+        translate(v=[0,0,lid_height_outer - overlap_height/2]) lip(tolerance);
     }
 }
 
