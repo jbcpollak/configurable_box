@@ -5,7 +5,7 @@ Use it to generate pencil boxes, soap boxes, a deckbox, any box you need!
 
 ## Adjustable Settings
 
-* External width, length, and height of both base and lid.
+* Internal width, length, and height of both base and lid.
 * Outer wall thickness
 * Height of the lip (aka "overlap") and ratio of lip to wall thickness
 * Radius of the curved edges
