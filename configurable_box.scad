@@ -1,19 +1,22 @@
 include <boxes.scad>
 
+// What to generate
+generate = 3; // [1:Base, 2:Lid, 3:Both]
+
 // Internal width of box
-width_inner = 75;
+width_inner = 60;
 
 // Internal bength of box
-length_inner = 75;
+length_inner = 60;
 
 // Internal height of bottom of box
-base_height = 120;
+base_height_internal = 120;
 
 // Internal height of the top/lid of the box
-lid_height = 72;
+lid_height_internal = 72;
 
 // Height of the lip to generate
-overlap_height = 15;
+overlap_height = 12;
 
 // Thickness of the outer wall
 wall_thickness = 2.4;
@@ -22,12 +25,12 @@ wall_thickness = 2.4;
 radius = 6; // [1:10]
 
 // Tolerance between lid and lip
-tolerance = 0.2;
+tolerance = 0.25;
 
 // Ratio of lip to regular wall thickness
 lip_thickness_ratio = 0.5;
 
-height_inner = base_height + lid_height;
+height_inner = base_height_internal + lid_height_internal;
 
 lip_thickness = wall_thickness * lip_thickness_ratio;
 
@@ -39,7 +42,7 @@ module lip(tol = 0) {
     difference() {
         // The outside shell
         roundedCube(
-            [width_inner+lip_thickness+tol,length_inner+lip_thickness+tol,overlap_height*2],
+            [width_inner+lip_thickness+tol*2,length_inner+lip_thickness+tol*2,overlap_height*2],
             radius,
             center=true
         );
@@ -73,7 +76,7 @@ module openBox(height) {
 }
 
 module base() {
-    base_height_outer = base_height + wall_thickness;
+    base_height_outer = base_height_internal + wall_thickness;
     
     union() {
         translate(v=[0,0,height_outer/2]) 
@@ -85,7 +88,7 @@ module base() {
 }
 
 module lid() {
-    lid_height_outer = lid_height + wall_thickness;
+    lid_height_outer = lid_height_internal + wall_thickness;
 
     difference() {
         translate(v=[0,0,height_outer/2]) 
@@ -94,10 +97,13 @@ module lid() {
     }
 }
 
-module boxAndLid() {
-	translate(v=[(width_outer/2)+5,0,0]) base();
-	translate(v=[(width_outer/-2)-5,0,0]) lid();
+
+offset = (generate == 3) ? (width_outer/2)+5 : 0;
+
+if ((generate % 2) == 1) {
+    translate(v=[offset,0,0]) base();
 }
 
-// Round box
-boxAndLid();
+if (generate >= 2) {
+    translate(v=[-offset,0,0]) lid();
+}
